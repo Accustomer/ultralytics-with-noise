@@ -1,0 +1,25 @@
+<annotation>
+	<folder>data/horse/xml-labels/</folder>
+	<filename>90</filename>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2000</width>
+		<height>1393</height>
+		<depth>1</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>background</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>1</difficult>
+		<bndbox>
+			<xmin>747</xmin>
+			<ymin>341</ymin>
+			<xmax>1584</xmax>
+			<ymax>1187</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>empty-images</folder>
+	<filename>23.jpg</filename>
+	<path>Z:\LongAoTian\SpermSurvival\ultralytics\data\horse\empty-images\23.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2000</width>
+		<height>1384</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>background</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>383</xmin>
+			<ymin>340</ymin>
+			<xmax>1212</xmax>
+			<ymax>834</ymax>
+		</bndbox>
+	</object>
+</annotation>

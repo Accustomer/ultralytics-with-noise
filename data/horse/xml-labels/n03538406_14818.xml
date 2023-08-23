@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>n03538406_14818.JPEG</filename>
+	<path>Z:\LongAoTian\SpermSurvival\ultralytics\data\horse\images\n03538406_14818.JPEG</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>364</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>horse</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>1</difficult>
+		<bndbox>
+			<xmin>237</xmin>
+			<ymin>90</ymin>
+			<xmax>459</xmax>
+			<ymax>342</ymax>
+		</bndbox>
+	</object>
+</annotation>

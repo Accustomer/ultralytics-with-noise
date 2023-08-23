@@ -69,6 +69,11 @@ class BaseDataset(Dataset):
         self.single_cls = single_cls
         self.prefix = prefix
         self.fraction = fraction
+        
+        # NOISY_BACKGROUND_CHANGE - Additional attributes
+        self.use_mosaic = augment and hyp.mosaic > 0
+        self.foreground_indexes = []
+        
         self.im_files = self.get_img_files(self.img_path)
         self.labels = self.get_labels()
         self.update_labels(include_class=classes)  # single_cls and include_class
@@ -81,9 +86,10 @@ class BaseDataset(Dataset):
             assert self.batch_size is not None
             self.set_rectangle()
 
-        # Buffer thread for mosaic images
-        self.buffer = []  # buffer size = batch size
-        self.max_buffer_length = min((self.ni, self.batch_size * 8, 1000)) if self.augment else 0
+        # NOISY_BACKGROUND_CHANGE - comment out buffer
+        # # Buffer thread for mosaic images
+        # self.buffer = []  # buffer size = batch size
+        # self.max_buffer_length = min((self.ni, self.batch_size * 8, 1000)) if self.augment else 0
 
         # Cache stuff
         if cache == 'ram' and not self.check_cache_ram():
@@ -158,13 +164,14 @@ class BaseDataset(Dataset):
                 im = cv2.resize(im, (min(math.ceil(w0 * r), self.imgsz), min(math.ceil(h0 * r), self.imgsz)),
                                 interpolation=interp)
 
-            # Add to buffer if training with augmentations
-            if self.augment:
-                self.ims[i], self.im_hw0[i], self.im_hw[i] = im, (h0, w0), im.shape[:2]  # im, hw_original, hw_resized
-                self.buffer.append(i)
-                if len(self.buffer) >= self.max_buffer_length:
-                    j = self.buffer.pop(0)
-                    self.ims[j], self.im_hw0[j], self.im_hw[j] = None, None, None
+            # NOISY_BACKGROUND_CHANGE - comment out buffer
+            # # Add to buffer if training with augmentations
+            # if self.augment:
+            #     self.ims[i], self.im_hw0[i], self.im_hw[i] = im, (h0, w0), im.shape[:2]  # im, hw_original, hw_resized
+            #     self.buffer.append(i)
+            #     if len(self.buffer) >= self.max_buffer_length:
+            #         j = self.buffer.pop(0)
+            #         self.ims[j], self.im_hw0[j], self.im_hw[j] = None, None, None
 
             return im, (h0, w0), im.shape[:2]
 

@@ -102,6 +102,14 @@ class BaseMixTransform:
         # Mosaic or MixUp
         labels = self._mix_transform(labels)
         labels.pop('mix_labels', None)
+        
+        # NOISY_BACKGROUND_CHANGE - Remove background 
+        coord = np.where(labels['cls'] >= 0)[0]
+        labels['cls'] = labels['cls'][coord]
+        labels['instances'].set_bboxes(labels['instances'].bboxes[coord])
+        if len(labels['instances'].segments):
+            labels['instances'].segments = labels['instances'].segments[coord]
+        
         return labels
 
     def _mix_transform(self, labels):
@@ -137,11 +145,19 @@ class Mosaic(BaseMixTransform):
         self.border = (-imgsz // 2, -imgsz // 2)  # width, height
         self.n = n
 
-    def get_indexes(self, buffer=True):
+    # def get_indexes(self, buffer=True):
+    #     """Return a list of random indexes from the dataset."""
+    #     if buffer:  # select images from buffer
+    #         return random.choices(list(self.dataset.buffer), k=self.n - 1)
+    #     else:  # select any images
+    #         return [random.randint(0, len(self.dataset) - 1) for _ in range(self.n - 1)]
+        
+    # NOISY_BACKGROUND_CHANGE - Get image indexes for mosaicing
+    def get_indexes(self):
         """Return a list of random indexes from the dataset."""
-        if buffer:  # select images from buffer
-            return random.choices(list(self.dataset.buffer), k=self.n - 1)
-        else:  # select any images
+        if len(self.dataset.foreground_indexes) < len(self.dataset):
+            return [random.choice(self.dataset.foreground_indexes)] + [random.randint(0, len(self.dataset) - 1) for _ in range(self.n - 2)]
+        else:
             return [random.randint(0, len(self.dataset) - 1) for _ in range(self.n - 1)]
 
     def _mix_transform(self, labels):
@@ -271,9 +287,17 @@ class MixUp(BaseMixTransform):
     def __init__(self, dataset, pre_transform=None, p=0.0) -> None:
         super().__init__(dataset=dataset, pre_transform=pre_transform, p=p)
 
+    # def get_indexes(self):
+    #     """Get a random index from the dataset."""
+    #     return random.randint(0, len(self.dataset) - 1)
+    
+    # NOISY_BACKGROUND_CHANGE - Get image index for mixup
     def get_indexes(self):
         """Get a random index from the dataset."""
-        return random.randint(0, len(self.dataset) - 1)
+        if len(self.dataset.foreground_indexes) < len(self.dataset):
+             return random.choice(self.dataset.foreground_indexes)
+        else:
+            return random.randint(0, len(self.dataset) - 1)
 
     def _mix_transform(self, labels):
         """Applies MixUp augmentation https://arxiv.org/pdf/1710.09412.pdf."""

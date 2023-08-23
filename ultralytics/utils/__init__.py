@@ -784,7 +784,9 @@ class SettingsManager(dict):
             'tensorboard': True,
             'wandb': True}
 
-        super().__init__(copy.deepcopy(self.defaults))
+        # PERSONAL_HABIT_CHANGE - update defaults
+        # super().__init__(copy.deepcopy(self.defaults))
+        self.update(copy.deepcopy(self.defaults))
 
         with torch_distributed_zero_first(RANK):
             if not self.file.exists():

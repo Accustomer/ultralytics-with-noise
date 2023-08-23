@@ -122,7 +122,9 @@ def verify_image_label(args):
                     assert lb.shape[1] == 5, f'labels require 5 columns, {lb.shape[1]} columns detected'
                     assert (lb[:, 1:] <= 1).all(), \
                         f'non-normalized or out of bounds coordinates {lb[:, 1:][lb[:, 1:] > 1]}'
-                    assert (lb >= 0).all(), f'negative label values {lb[lb < 0]}'
+                    # assert (lb >= 0).all(), f'negative label values {lb[lb < 0]}'
+                    # NOISY_BACKGROUND_CHANGE (-1: background, [0, num_cls): classes)
+                    assert (lb >= -1).all(), f'negative label values {lb[lb < -1]}'
                 # All labels
                 max_cls = int(lb[:, 0].max())  # max label count
                 assert max_cls <= num_cls, \
@@ -257,7 +259,9 @@ def check_det_dataset(dataset, autodownload=True):
     path = Path(extract_dir or data.get('path') or Path(data.get('yaml_file', '')).parent)  # dataset root
 
     if not path.is_absolute():
-        path = (DATASETS_DIR / path).resolve()
+        # PERSONAL_HABIT_CHANGE - relative path
+        # path = (DATASETS_DIR / path).resolve()
+        path = (os.getcwd() / path).resolve()
     data['path'] = path  # download scripts
     for k in 'train', 'val', 'test':
         if data.get(k):  # prepend path

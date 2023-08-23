@@ -40,6 +40,20 @@ class YOLODataset(BaseDataset):
         assert not (self.use_segments and self.use_keypoints), 'Can not use both segments and keypoints.'
         super().__init__(*args, **kwargs)
 
+    # NOISY_BACKGROUND_CHANGE - Get length of dataset
+    def __len__(self):
+        if self.use_mosaic:
+            return len(self.labels)
+        else:
+            return len(self.foreground_indexes)
+
+    # NOISY_BACKGROUND_CHANGE - Get an item of dataset
+    def __getitem__(self, index):
+        if self.use_mosaic:
+            return self.transforms(self.get_image_and_label(index))
+        else:
+            return self.transforms(self.get_image_and_label(self.foreground_indexes[index]))
+        
     def cache_labels(self, path=Path('./labels.cache')):
         """Cache dataset labels, check images and read shapes.
         Args:
@@ -131,6 +145,14 @@ class YOLODataset(BaseDataset):
                 lb['segments'] = []
         if len_cls == 0:
             raise ValueError(f'All labels empty in {cache_path}, can not start training without labels. {HELP_URL}')
+                
+        # NOISY_BACKGROUND_CHANGE - Get foreground index
+        self.foreground_indexes = []
+        for i, lb in enumerate(labels):
+            if any(lb['cls'] < 0):
+                continue
+            self.foreground_indexes.append(i)
+            
         return labels
 
     # TODO: use hyp config to set all these augmentations
@@ -158,6 +180,7 @@ class YOLODataset(BaseDataset):
         hyp.copy_paste = 0.0  # keep the same behavior as previous v8 close-mosaic
         hyp.mixup = 0.0  # keep the same behavior as previous v8 close-mosaic
         self.transforms = self.build_transforms(hyp)
+        self.use_mosaic = False
 
     def update_labels_info(self, label):
         """custom your label format here."""

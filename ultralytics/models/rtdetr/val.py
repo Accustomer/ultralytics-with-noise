@@ -34,13 +34,14 @@ class RTDETRDataset(YOLODataset):
             h0, w0 = im.shape[:2]  # orig hw
             im = cv2.resize(im, (self.imgsz, self.imgsz), interpolation=cv2.INTER_LINEAR)
 
-            # Add to buffer if training with augmentations
-            if self.augment:
-                self.ims[i], self.im_hw0[i], self.im_hw[i] = im, (h0, w0), im.shape[:2]  # im, hw_original, hw_resized
-                self.buffer.append(i)
-                if len(self.buffer) >= self.max_buffer_length:
-                    j = self.buffer.pop(0)
-                    self.ims[j], self.im_hw0[j], self.im_hw[j] = None, None, None
+            # NOISY_BACKGROUND_CHANGE - comment out buffer
+            # # Add to buffer if training with augmentations
+            # if self.augment:
+            #     self.ims[i], self.im_hw0[i], self.im_hw[i] = im, (h0, w0), im.shape[:2]  # im, hw_original, hw_resized
+            #     self.buffer.append(i)
+            #     if len(self.buffer) >= self.max_buffer_length:
+            #         j = self.buffer.pop(0)
+            #         self.ims[j], self.im_hw0[j], self.im_hw[j] = None, None, None
 
             return im, (h0, w0), im.shape[:2]
 

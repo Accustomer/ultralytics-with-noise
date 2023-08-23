@@ -1,0 +1,4 @@
+train: train-without-noise.txt
+val: valid-without-noise.txt
+nc: 1
+names: [horse]

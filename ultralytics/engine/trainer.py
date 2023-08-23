@@ -142,7 +142,10 @@ class BaseTrainer:
         self.tloss = None
         self.loss_names = ['Loss']
         self.csv = self.save_dir / 'results.csv'
-        self.plot_idx = [0, 1, 2]
+        
+        # PERSONAL_HABIT_CHANGE - relative path
+        # self.plot_idx = [0, 1, 2]
+        self.plot_idx = [0, 1, 2, 3, 4, 5]
 
         # Callbacks
         self.callbacks = _callbacks or callbacks.get_default_callbacks()

@@ -1,0 +1,13 @@
+<annotation>
+	<folder>data/horse/xml-labels/</folder>
+	<filename>n03538406_10120</filename>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>550</width>
+		<height>417</height>
+		<depth>1</depth>
+	</size>
+	<segmented>0</segmented>
+</annotation>

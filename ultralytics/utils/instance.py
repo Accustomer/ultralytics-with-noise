@@ -42,6 +42,10 @@ class Bboxes:
         self.bboxes = bboxes
         self.format = format
         # self.normalized = normalized
+                
+    # NOISY_BACKGROUND_CHANGE - Set bboxes
+    def set_bboxes(self, new_bboxes):
+        self.bboxes = new_bboxes
 
     def convert(self, format):
         """Converts bounding box format from one type to another."""
@@ -328,6 +332,10 @@ class Instances:
     def __len__(self):
         """Return the length of the instance list."""
         return len(self.bboxes)
+                
+    # NOISY_BACKGROUND_CHANGE - Set bboxes
+    def set_bboxes(self, new_bboxes):
+        self._bboxes.set_bboxes(new_bboxes)
 
     @classmethod
     def concatenate(cls, instances_list: List['Instances'], axis=0) -> 'Instances':
