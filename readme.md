@@ -3,6 +3,7 @@
     <a href="https://ultralytics.com/yolov8" target="_blank">
       <img width="100%" src="https://raw.githubusercontent.com/ultralytics/assets/main/yolov8/banner-yolov8.png"></a>
   </p>
+</div>
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 <br>
@@ -17,7 +18,6 @@
     <a href="https://colab.research.google.com/github/ultralytics/ultralytics/blob/main/examples/tutorial.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
     <a href="https://www.kaggle.com/ultralytics/yolov8"><img src="https://kaggle.com/static/images/open-in-kaggle.svg" alt="Open In Kaggle"></a>
   </div>
-
   <br>
 
 This is a modified version of YOLOv8. This version has more advantages over than the original version because it can reduce fall-out ratio. 
