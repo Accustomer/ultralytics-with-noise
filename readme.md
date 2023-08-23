@@ -31,7 +31,7 @@ I used this project and the original project to train a horse-detector respectiv
 
 A comparison diagram of false detection is shown here:
 
-![test-compare](D:/Users/acer/Documents/GitHub/ultralytics-with-noise/supplementary/test-compare.jpg)
+![test-compare](supplementary/test-compare.jpg)
 
 For details, see [减少目标检测误检率——加噪 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/651963732)
 
